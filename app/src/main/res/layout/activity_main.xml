@@ -22,13 +22,6 @@
 
     <include layout="@layout/content_main" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
-        android:text="delete"
-        android:id="@+id/dd"/>
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAdd"
         android:layout_width="wrap_content"

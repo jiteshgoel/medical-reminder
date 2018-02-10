@@ -18,6 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_2="status";
     public static final String COLUMN_3="date";
     public static final String COLUMN_4="time";
+    public static final String COLUMN_5="millis";
     public static final String CREATE_TABLE="CREATE TABLE "
             + TABLE + " ( "
             + _ID + " INTEGER PRIMARY KEY, "

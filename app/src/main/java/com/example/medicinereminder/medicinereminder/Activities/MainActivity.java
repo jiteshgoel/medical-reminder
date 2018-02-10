@@ -1,9 +1,13 @@
 package com.example.medicinereminder.medicinereminder.Activities;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
@@ -25,6 +29,7 @@ import android.widget.Toast;
 import com.example.medicinereminder.medicinereminder.Adapters.TaskAdapter;
 import com.example.medicinereminder.medicinereminder.Models.Task;
 import com.example.medicinereminder.medicinereminder.R;
+import com.example.medicinereminder.medicinereminder.Utils.AlarmReceiver;
 import com.example.medicinereminder.medicinereminder.Utils.DatabaseHelper;
 
 import java.text.ParseException;
@@ -41,8 +46,20 @@ public class MainActivity extends AppCompatActivity {
     TextInputLayout dialogText;
     DatabaseHelper dbHelp;
     RecyclerView recyclerView;
-    Button dd;
     ArrayList<Task> arrayList;
+    AlarmManager alarmManager;
+    String taskName="";
+    private static MainActivity inst;
+
+    public static MainActivity instance() {
+        return inst;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        inst = this;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,40 +67,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         arrayList=new ArrayList<>();
+        alarmManager= (AlarmManager) getSystemService(ALARM_SERVICE);
 
         recyclerView=findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(new TaskAdapter(arrayList,MainActivity.this));
 
         dbHelp = new DatabaseHelper(this);
-        dd=findViewById(R.id.dd);
 
-       /* alist=findViewById(R.id.newlist);
-
-        alist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                adapterView.getItemAtPosition(i).toString();
-
-            }
-        });
-*/
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getData();
-        dd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteData("first");
-            }
-        });
 
-        Calendar ccc = Calendar.getInstance();
-        System.out.println("Current time => " + ccc.getTime());
+        final Calendar[] ccc = {Calendar.getInstance()};
+        System.out.println("Current time => " + ccc[0].getTime());
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = df.format(ccc.getTime());
+        String formattedDate = df.format(ccc[0].getTime());
 
         Log.d("CCC", "onCreate: "+formattedDate);
 
@@ -128,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onDateSet(DatePicker view, int year,
                                                           int monthOfYear, int dayOfMonth) {
+
+                                        ccc[0].set(year, monthOfYear, dayOfMonth);
 
                                         dateString = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                                         btnDate.setText(dateString);
@@ -187,6 +190,9 @@ public class MainActivity extends AppCompatActivity {
                                     public void onTimeSet(TimePicker view, int hourOfDay,
                                                           int minute) {
 
+                                        ccc[0].set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                        ccc[0].set(Calendar.MINUTE, minute);
+
                                         timeString = hourOfDay + ":" + minute;
                                         btnTime.setText(timeString);
                                     }
@@ -199,6 +205,10 @@ public class MainActivity extends AppCompatActivity {
                 dialog.findViewById(R.id.addTask).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        taskName=dialogText.getEditText().getText().toString();
+                        Log.d("calendar_time", "onClick: " + ccc[0].getTimeInMillis());
+                        setAlarm(ccc[0].getTimeInMillis(),dialogText.getEditText().getText().toString());
+                        //scheduleNotification(MainActivity.this,ccc.getTimeInMillis(), (int) System.currentTimeMillis());
                         addNew(dialogText.getEditText().getText().toString(),dateString,timeString);
                         dialog.dismiss();
                         Toast.makeText(MainActivity.this, "Task Added..", Toast.LENGTH_SHORT).show();
@@ -206,6 +216,27 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    public void setAlarm(long timeInMillis,String task)
+    {
+        Log.d("notif_task", "setAlarm: "+timeInMillis);
+        AlarmManager  manager= (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent=new Intent(MainActivity.this, AlarmReceiver.class);
+        intent.putExtra("task",task);
+        intent.putExtra("millis",(int) timeInMillis);
+        final int _id = (int) System.currentTimeMillis();
+//        Log.d("", "setAlarm: ");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int)timeInMillis, intent, PendingIntent.FLAG_ONE_SHOT);
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent);
+        //manager.set(AlarmManager.RTC, timeInMillis, pendingIntent);
+        Date date = new Date(timeInMillis);
+        Log.d("Date:", date.toString());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+        } else {
+            manager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+        }
     }
 
     @Override

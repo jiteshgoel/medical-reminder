@@ -58,6 +58,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     @Override
                     public void onClick(View view) {
                         db.deleteTask(thisTask.getTaskName().trim());
+                        notifyDataSetChanged();
                         dialog.dismiss();
                     }
                 });
