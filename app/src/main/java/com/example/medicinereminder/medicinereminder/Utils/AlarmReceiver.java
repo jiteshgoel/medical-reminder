@@ -13,10 +13,6 @@ import android.util.Log;
 import com.example.medicinereminder.medicinereminder.Activities.MainActivity;
 import com.example.medicinereminder.medicinereminder.R;
 
-/**
- * Created by sukrit on 10/2/18.
- */
-
 public class AlarmReceiver extends BroadcastReceiver {
 
     public static String NOTIFICATION_ID = "notification_id";
@@ -36,7 +32,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         int notifyId = intent.getIntExtra("millis",0);
         Intent intent2 = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,notifyId
-
                 , intent2, 0);
 
 
@@ -55,3 +50,50 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     }
 }
+/*
+package com.example.medicinereminder.medicinereminder.Utils;
+
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.provider.Settings;
+import android.widget.RemoteViews;
+
+import com.example.medicinereminder.medicinereminder.R;
+
+*/
+/**
+ * Created by sukrit on 10/2/18.
+ *//*
+
+
+public class AlarmReceiver extends BroadcastReceiver {
+
+    public static String NOTIFICATION_ID = "notification_id";
+    public static String NOTIFICATION = "notification";
+    int notify_id;
+    NotificationManager notificationManager;
+    RemoteViews remoteViews;
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        MediaPlayer mediaPlayer=MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
+        mediaPlayer.start();
+
+        notify_id=intent.getIntExtra("millis",0);
+        Intent button_intent=new Intent("button_clicked");
+        button_intent.putExtra("id",notify_id);
+
+        PendingIntent pendingIntent=PendingIntent.getBroadcast(context,123,button_intent,0);
+        remoteViews.setOnClickPendingIntent(R.id.notifBtn,pendingIntent);
+
+        notificationManager= (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        remoteViews=new RemoteViews(context.getPackageName(), R.layout.custom_notification);
+        remoteViews.setTextViewText(R.id.messageDetails,intent.getStringExtra("task"));
+    }
+}
+*/
+

@@ -29,14 +29,14 @@
             android:textColor="#3F51B5"
             android:textSize="20sp" />
 
-        <CheckBox
+        <ImageView
             android:id="@+id/checkBox"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:src="@drawable/success"
             android:layout_toRightOf="@+id/reminderDetails"
-            android:layout_weight="1"
-            android:button="@layout/checkbox_background" />
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="wrap_content"

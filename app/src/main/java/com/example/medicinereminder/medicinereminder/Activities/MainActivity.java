@@ -205,13 +205,18 @@ public class MainActivity extends AppCompatActivity {
                 dialog.findViewById(R.id.addTask).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        taskName=dialogText.getEditText().getText().toString();
-                        Log.d("calendar_time", "onClick: " + ccc[0].getTimeInMillis());
-                        setAlarm(ccc[0].getTimeInMillis(),dialogText.getEditText().getText().toString());
-                        //scheduleNotification(MainActivity.this,ccc.getTimeInMillis(), (int) System.currentTimeMillis());
-                        addNew(dialogText.getEditText().getText().toString(),dateString,timeString);
-                        dialog.dismiss();
-                        Toast.makeText(MainActivity.this, "Task Added..", Toast.LENGTH_SHORT).show();
+                        if(dialogText.getEditText().getText().toString().length()>0 && ccc[0]!=null) {
+                            taskName = dialogText.getEditText().getText().toString();
+                            Log.d("calendar_time", "onClick: " + ccc[0].getTimeInMillis());
+                            setAlarm(ccc[0].getTimeInMillis(), dialogText.getEditText().getText().toString());
+                            //scheduleNotification(MainActivity.this,ccc.getTimeInMillis(), (int) System.currentTimeMillis());
+                            addNew(dialogText.getEditText().getText().toString(),ccc[0].getTimeInMillis(), dateString, timeString);
+                            dialog.dismiss();
+                            Toast.makeText(MainActivity.this, "Task Added..", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(MainActivity.this, "All details required.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }
@@ -260,9 +265,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addNew(String task,String date,String time) {
+    public void addNew(String task,Long timeinMillis,String date,String time) {
         String s1 = task;
-        String s2 = "0";
+        String s2 = Long.toString(timeinMillis);
         String s3 = date;
         String s4 = time;
         dbHelp.addData(s1,s2,s3,s4);

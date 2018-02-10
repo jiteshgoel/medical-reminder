@@ -15,15 +15,14 @@
         android:textStyle="bold"
         android:text="Notification Custom In " />
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/alarmclock"
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/notifBtn"
-        android:layout_marginRight="30dp"
+        android:text="Cancel"
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="10dp" />
 
 
 </RelativeLayout>

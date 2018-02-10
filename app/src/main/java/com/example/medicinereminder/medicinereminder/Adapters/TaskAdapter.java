@@ -3,9 +3,11 @@ package com.example.medicinereminder.medicinereminder.Adapters;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.medicinereminder.medicinereminder.Models.Task;
@@ -41,11 +43,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     @Override
-    public void onBindViewHolder(TaskAdapter.TaskViewHolder holder, int position) {
+    public void onBindViewHolder(final TaskAdapter.TaskViewHolder holder, final int position) {
         final Task thisTask = arrayList.get(position);
         holder.taskName.setText(thisTask.getTaskName());
         holder.taskDate.setText(thisTask.getDateString());
         holder.taskTime.setText(thisTask.getTimeString());
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.checkBox.setImageResource(R.drawable.checked);
+                holder.checkBox.setClickable(false);
+                db.deleteTask(thisTask.getTaskName().trim());
+                Log.d("ABB", "onClick: "+thisTask.getTaskName());
+
+            }
+        });
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -57,8 +70,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 dialog.findViewById(R.id.yesButton).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        arrayList.remove(holder.getAdapterPosition());
                         db.deleteTask(thisTask.getTaskName().trim());
                         notifyDataSetChanged();
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position,arrayList.size());
+
                         dialog.dismiss();
                     }
                 });
@@ -82,12 +99,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView taskName,taskDate,taskTime;
         View testView;
+        ImageView checkBox;
 
         public TaskViewHolder(View itemView) {
             super(itemView);
             taskName=itemView.findViewById(R.id.reminderDetails);
             taskDate=itemView.findViewById(R.id.whichDay);
             taskTime=itemView.findViewById(R.id.whatTime);
+            checkBox=itemView.findViewById(R.id.checkBox);
             testView=itemView;
         }
     }
