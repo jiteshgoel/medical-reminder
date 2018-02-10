@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogMessage"
+        android:text="Do you want to delete this To-Do ?"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textAlignment="center"
+        android:layout_marginBottom="20dp"
+        android:textColor="#000000"
+        android:textSize="18sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:id="@+id/noButtton"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:text="No"/>
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/yesButton"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:text="Yes"/>
+
+    </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

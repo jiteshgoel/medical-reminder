@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="23dp"
+            android:text="TASK: "
+            android:textSize="15sp"
+            android:textColor="@color/oldPrimary"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:id="@+id/details"
+            android:textColorHint="@color/colorPrimary">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:layout_marginLeft="0dp"
+            android:id="@+id/btnSpeech"
+            android:layout_marginTop="4dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/checked"
+            android:background="#FFFFFF"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="DUE DATE: "
+            android:textSize="15sp"
+            android:textColor="@color/oldPrimary"/>
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:id="@+id/selectDate"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="4dp"
+            android:text="SELECT Date"
+            />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="17dp"
+            android:adjustViewBounds="true"
+            android:layout_marginLeft="26dp"
+            android:src="@drawable/calendar"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="SET TIME: "
+            android:textSize="15sp"
+            android:textColor="@color/oldPrimary"/>
+
+        <Button
+            android:id="@+id/selectTime"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:text="SELECT TIME"
+            android:layout_marginLeft="8dp"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/alarmclock"/>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addTask"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="32dp"
+            android:background="@color/oldPrimary"
+            android:text="ADD TASK"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
+
+</LinearLayout>
