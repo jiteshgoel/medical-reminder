@@ -2,6 +2,8 @@ package com.example.medicinereminder.medicinereminder.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +55,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             @Override
             public void onClick(View view) {
                 holder.checkBox.setImageResource(R.drawable.checked);
+                MediaPlayer mediaPlayer=MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
+                Log.d("TAG", "check: "+mediaPlayer.isPlaying());
+                if(mediaPlayer.isPlaying())
+                {
+                    mediaPlayer.stop();
+                }
                 holder.checkBox.setClickable(false);
                 db.deleteTask(thisTask.getTaskName().trim());
                 Log.d("ABB", "onClick: "+thisTask.getTaskName());
