@@ -1,8 +1,5 @@
 package com.example.medicinereminder.medicinereminder.Models;
 
-/**
- * Created by sukrit on 10/2/18.
- */
 
 public class Task {
     String taskName;

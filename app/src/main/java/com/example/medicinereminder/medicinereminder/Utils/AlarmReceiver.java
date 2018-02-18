@@ -89,12 +89,6 @@ import android.widget.RemoteViews;
 
 import com.example.medicinereminder.medicinereminder.R;
 
-*/
-/**
- * Created by sukrit on 10/2/18.
- *//*
-
-
 public class AlarmReceiver extends BroadcastReceiver {
 
     public static String NOTIFICATION_ID = "notification_id";

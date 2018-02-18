@@ -12,17 +12,15 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     String timeString, dateString;
     TextInputLayout dialogText;
     DatabaseHelper dbHelp;
-    RecyclerView recyclerView;
+    ListView listView;
     ArrayList<Task> arrayList;
     AlarmManager alarmManager;
     String taskName="";
@@ -69,9 +67,8 @@ public class MainActivity extends AppCompatActivity {
         arrayList=new ArrayList<>();
         alarmManager= (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        recyclerView=findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(new TaskAdapter(arrayList,MainActivity.this));
+        listView =findViewById(R.id.recyclerView);
+        listView.setAdapter(new TaskAdapter(this,R.layout.list_item,arrayList));
 
         dbHelp = new DatabaseHelper(this);
 
@@ -244,12 +241,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -287,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
             Task task=new Task(taskName,taskStatus,taskDate,taskTime);
             arrayList.add(task);
         }
-        recyclerView.setAdapter(new TaskAdapter(arrayList,this));
+        listView.setAdapter(new TaskAdapter(this,R.layout.list_item,arrayList));
         /*ListAdapter myAdapter = new SimpleCursorAdapter(this,R.layout.list_item,
                 cursor,
                 new String[]{dbHelp.COLUMN_1,dbHelp.COLUMN_3,dbHelp.COLUMN_4},
@@ -298,6 +289,6 @@ public class MainActivity extends AppCompatActivity {
     public void deleteData(String s)
     {
         dbHelp.deleteTask(s);
-        //recyclerView.setAdapter(new TaskAdapter(arrayList,this));
+        //listView.setAdapter(new TaskAdapter(arrayList,this));
     }
 }

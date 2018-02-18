@@ -1,8 +1,6 @@
 package com.example.medicinereminder.medicinereminder.Utils;
 
-/**
- * Created by sukrit on 10/2/18.
- */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
